@@ -32,7 +32,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
-    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+    const isNonMobileScreens = useMediaQuery("(min-width: 825px)");
 
     const theme = useTheme();
     const neutralLight = theme.palette.neutral.light;
@@ -41,7 +41,7 @@ const Navbar = () => {
     const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
 
-    const fullName = `${user.nametag}`;
+    const fullName = `usuario`;
 
     return <FlexBetween padding="1rem 6%" backgroundColor={alt}>
         <FlexBetween gap = "1.75 rem">
@@ -60,7 +60,7 @@ const Navbar = () => {
                 UnHilo
             </Typography>
             {isNonMobileScreens && (
-                <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem">
+                <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem" marginX="25px">
                     <InputBase placeholder="Search..."/>
                     <IconButton>
                         <Search/>
@@ -137,7 +137,7 @@ const Navbar = () => {
                 </Box>
 
                 {/* MENU ITEMS */}
-                <FlexBetween display="flex" flexDirection="cloumn" justifyContent="center" alignItems="center" gap="3rem">
+                <FlexBetween display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="3rem">
                     <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: "25px" }}>
                         {theme.palette.mode === "dark" ? (
                             <DarkMode sx={{ fontSize: "25px"}} />
