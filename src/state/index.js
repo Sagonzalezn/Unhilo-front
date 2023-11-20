@@ -1,4 +1,3 @@
-import { create } from "@mui/material/styles/createTransitions";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -11,7 +10,7 @@ const initialState = {
 export const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {//TIENE LA "s" al final del archivo?
+    reducers: {
         setMode: (state) => {
             state.mode = state.mode === "light" ? "dark" : "light"
         },
@@ -35,7 +34,7 @@ export const authSlice = createSlice({
         },
         setPost: (state, action) => {
             const updatedPosts = state.posts.map((post) => {
-                if (post._id === action.payload.post_id) return action.payload.post;
+                if (post._id === action.payload.post._id) return action.payload.post;
                 return post;
             });
             state.posts = updatedPosts;

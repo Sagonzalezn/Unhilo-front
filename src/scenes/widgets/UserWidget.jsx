@@ -69,7 +69,7 @@ const UserWidget = ({ userId, picturePath }) => {
                             }}>
                             {nametag}
                         </Typography>
-                        <Typography color={medium}>{related.length} Relacionados</Typography>
+                        <Typography color={medium}>{/* {related.length} */} Relacionados</Typography>
                     </Box>
                 </FlexBetween>
                 <ManageAccountsOutlined />
