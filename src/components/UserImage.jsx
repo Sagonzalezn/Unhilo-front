@@ -8,7 +8,7 @@ const UserImage = ({ image, size = "60px"}) => {
                 width={size}
                 height={size}
                 alt="user"
-                src={`http://localhost:3001/assets/${image}`} //REVIEW SO IT IS NOT LOCAL HOST
+                src={`${process.env.REACT_APP_BACKEND_URL}/assets/${image}`} //REVIEW SO IT IS NOT LOCAL HOST
             />
         </Box>
     )

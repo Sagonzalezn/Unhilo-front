@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
     Box,
-    Butoon,
     TextField,
     useMediaQuery,
     Typography,
@@ -53,6 +52,7 @@ const Form = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
+    const [postImage, setPostImage] = useState({ myFile : ""});
 
     const register = async (values, onSubmitProps) => {
         // Mandar indormación de formulario con imagen
@@ -60,11 +60,11 @@ const Form = () => {
         for (let value in values) {
             formData.append(value, values[value])
         }
-        formData.append("picturePath", values.picture.name);
+        formData.append("picturePath", postImage);
+        console.log("uploaded image: " + postImage)
 
-        /* REVIEW SO IT IS NOT LOCALHOST */
         const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register",
+            `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
             {
                 method: "POST",
                 body: formData,
@@ -79,9 +79,8 @@ const Form = () => {
     };
 
     const login = async(values, onSubmitProps) => {
-        /* REVIEW SO IT IS NOT LOCALHOST */
         const loggedInResponse = await fetch(
-            "http://localhost:3001/auth/login",
+            `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
             {
                 method: "POST",
                 headers: { "Content-Type" : "application/json"},
@@ -105,6 +104,14 @@ const Form = () => {
         if (isLogin) await login(values, onSubmitProps);
         if (isRegister) await register(values, onSubmitProps);
     };
+
+    const handleFileUpload = async (e) => {
+        const file = e.target;
+        console.log(file + " Esta es---")
+        const base64 = await convertToBase64(file);
+        console.log(base64 + " Este es base 64 ---")
+        setPostImage({ ...postImage, myFile : base64})
+    }
 
     return (
         <Formik
@@ -183,7 +190,7 @@ const Form = () => {
                                                 p="1rem"
                                                 sx={{ "&:hover": { cursor: "pointer" }}}
                                             >
-                                                <input {...getInputProps()} />
+                                                <input {...getInputProps()} onChange={(e) => handleFileUpload(e)}/>
                                                 {!values.picture ? (
                                                     <p>Añade una imagen aquí</p>
                                                 ) : (
@@ -262,3 +269,16 @@ const Form = () => {
 }
 
 export default Form;
+
+function convertToBase64(file){
+    return new Promise((resolve, reject ) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        };
+        fileReader.onerror = (error) => {
+            reject(error)
+        }
+    })
+}

@@ -9,7 +9,6 @@ import {
     FormControl,
     useTheme,
     useMediaQuery,
-    Icon
 } from "@mui/material";
 import {
     Search,
@@ -41,7 +40,7 @@ const Navbar = () => {
     const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
 
-    const fullName = `usuario`;
+    const fullName = `${user.nametag}`;
 
     return <FlexBetween padding="1rem 6%" backgroundColor={alt}>
         <FlexBetween gap = "1.75 rem">

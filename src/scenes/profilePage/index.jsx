@@ -17,7 +17,7 @@ const ProfilePage = () => {
         if ( userId === 'undefined') {
             console.log("_id is undefined");
         }
-        const response = await fetch(`http://localhost:3001/users/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/${userId}`, {
             method: "GET",
             headers: { Authorization: `Bearer ${token}`}
         })
