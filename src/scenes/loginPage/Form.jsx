@@ -52,16 +52,17 @@ const Form = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
-    const [postImage, setPostImage] = useState({ myFile : ""});
+    const [postImage, setPostImage] = useState("");
 
     const register = async (values, onSubmitProps) => {
         // Mandar indormación de formulario con imagen
         const formData = new FormData();
         for (let value in values) {
+            console.log(value + " --- " + values[value])
             formData.append(value, values[value])
         }
-        formData.append("picturePath", postImage);
-        console.log("uploaded image: " + postImage)
+
+        console.log(formData)
 
         const savedUserResponse = await fetch(
             `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
@@ -102,16 +103,15 @@ const Form = () => {
 
     const handleFormSubmit = async(values, onSubmitProps) => {
         if (isLogin) await login(values, onSubmitProps);
-        if (isRegister) await register(values, onSubmitProps);
+        if (isRegister){
+            const file = values.picture;
+            const base64 = await convertToBase64(file);
+            setPostImage({ ...postImage, base64})
+            values.picture = base64
+            await register(values, onSubmitProps);
+        }
     };
 
-    const handleFileUpload = async (e) => {
-        const file = e.target;
-        console.log(file + " Esta es---")
-        const base64 = await convertToBase64(file);
-        console.log(base64 + " Este es base 64 ---")
-        setPostImage({ ...postImage, myFile : base64})
-    }
 
     return (
         <Formik
@@ -151,7 +151,7 @@ const Form = () => {
                                     sx={{ gridColumn: "span 2"}}
                                 />
                                 <TextField 
-                                    label = "Ubicación"
+                                    label = "Ubicación (opcional)"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.location}
@@ -179,8 +179,8 @@ const Form = () => {
                                     <Dropzone
                                         acceptedFiles=".jpg,.jpeg,.png"
                                         multiple={false}
-                                        onDrop={(acceptedFiles) => 
-                                            setFieldValue("picture" , acceptedFiles[0])
+                                        onDrop={(acceptedFiles) =>
+                                            setFieldValue("picture", acceptedFiles[0])
                                         }
                                     >
                                         {({ getRootProps, getInputProps }) =>(
@@ -190,7 +190,7 @@ const Form = () => {
                                                 p="1rem"
                                                 sx={{ "&:hover": { cursor: "pointer" }}}
                                             >
-                                                <input {...getInputProps()} onChange={(e) => handleFileUpload(e)}/>
+                                                <input {...getInputProps()}/>
                                                 {!values.picture ? (
                                                     <p>Añade una imagen aquí</p>
                                                 ) : (
