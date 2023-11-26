@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
     Box,
-    Butoon,
     TextField,
     useMediaQuery,
     Typography,
@@ -103,7 +102,10 @@ const Form = () => {
 
     const handleFormSubmit = async(values, onSubmitProps) => {
         if (isLogin) await login(values, onSubmitProps);
-        if (isRegister) await register(values, onSubmitProps);
+        if (isRegister) {
+            await register(values, onSubmitProps);
+            
+        }
     };
 
     return (
@@ -135,6 +137,7 @@ const Form = () => {
                             <>
                                 <TextField 
                                     label = "Nombre"
+                                    defaultValue = ""
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.nametag}
