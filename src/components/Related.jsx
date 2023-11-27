@@ -26,7 +26,7 @@ const Related = ({ relatedId, name, subtitle, userPicturePath}) => {
 
     const patchRelated = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/${_id}/${relatedId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/users/${_id}/${relatedId}`,
             {
                 method: "PATCH",
                 headers: {

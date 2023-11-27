@@ -1,0 +1,11 @@
+version: '3.4'
+services: 
+  unhilofrontend:
+    image: sagonzalezn/unhilofrontend
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: unhilofrontend_dev
+    env_file: .env
+    ports:
+      - '3000:3000'

@@ -13,7 +13,7 @@ const RelatedListWidget = ({ userId }) => {
     
     const getRelated = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/${userId}/related`,
+            `${process.env.REACT_APP_BACKEND_URL}/users/${userId}/related`,
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}`}

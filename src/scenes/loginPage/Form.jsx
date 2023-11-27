@@ -60,10 +60,10 @@ const Form = () => {
             formData.append(value, values[value])
         }
         formData.append("picturePath", values.picture.name);
+        
 
-        /* REVIEW SO IT IS NOT LOCALHOST */
         const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register",
+            `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
             {
                 method: "POST",
                 body: formData,
@@ -78,9 +78,8 @@ const Form = () => {
     };
 
     const login = async(values, onSubmitProps) => {
-        /* REVIEW SO IT IS NOT LOCALHOST */
         const loggedInResponse = await fetch(
-            "http://localhost:3001/auth/login",
+            `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
             {
                 method: "POST",
                 headers: { "Content-Type" : "application/json"},
